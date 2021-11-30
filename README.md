@@ -79,7 +79,7 @@ Boxkite is a project from BasisAI, who offer an MLOps Platform called Bedrock.
 
 [Bedrock](https://basis-ai.com/product) helps data scientists own the end-to-end deployment of machine learning workflows. Boxkite was originally part of the Bedrock client library, but we've spun it out into an open source project so that it's useful for everyone!
 
-## Example
+## Boxkite dummy example
 
 1. Create the virtual environment for this example, and install the required modules.
 ```bash
@@ -147,7 +147,7 @@ curl -X POST -H "Content-Type:application/json; format=pandas-split" \
 
 9. The Boxkite metrics are exposed: http://localhost:5001/metrics
 
-10. Install the Prometheus using pre-compiled binaries - https://prometheus.io/docs/prometheus/latest/installation/
+10. Install the Prometheus using [pre-compiled binaries](https://prometheus.io/docs/prometheus/latest/installation/)
 
 11. Start the Prometheus server with the updated config "prometheus.yml": http://localhost:9090
 ```bash
@@ -165,7 +165,7 @@ scrape_configs:
       - targets: [ "localhost:5001" ]
 ```
 
-12. Install the Grafana using macOS binaries - https://grafana.com/docs/grafana/latest/installation/mac/#installing-on-macos
+12. Install the Grafana using [macOS binaries](https://grafana.com/docs/grafana/latest/installation/mac/#installing-on-macos)
 
 13. Start the Grafana server: http://localhost:3000
 ```bash
@@ -177,11 +177,71 @@ scrape_configs:
   <img src="./pix/grafana-prometheus-data-source.png" width="500" />
 </p>
 
-15. Create the Boxkite dashboard using the defined JSON - https://github.com/boxkite-ml/boxkite/blob/master/examples/grafana-prometheus/metrics/dashboards/model.json
+15. Create the Boxkite dashboard using the [defined model JSON](https://github.com/boxkite-ml/boxkite/blob/master/examples/grafana-prometheus/metrics/dashboards/model.json)
 <p>
   <img src="./pix/grafana-boxkite-dashboard.png" width="700" />
 </p>
 
+## Virtual Environment
+
+1. Use **setuptools** to package the project whose structure is as follows:
+  * **pyproject.toml** - declare you want to use setuptools to package your project.
+  * **setup.py** - specify your package information, such as metadata, contents, dependencies.
+
+```bash
+├── <package_name>                
+|   ├── <package_name>
+|   |   ├── <library_name>
+|   |   |   ├── __init__.py
+|   |   └── <library_name>
+|   |   |   ├── __init__.py
+|   |   ├── __init__.py
+|   ├── dist
+|   ├── venv
+|   ├── pyproject.toml
+|   ├── setup.py
+```
+
+2. Use **venv** to create and activate the virtual environment, which contains the would-be installed python packages and binaries.
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+3. Install **pip-tools** to compile and sync the local development environment.
+```bash
+pip install pip-tools
+
+pip-compile # generate "requirements.txt"
+pip-sync # install the required packages
+```
+
+4. Use **build** to build the package in the distribution directory "dist", e.g. either a "tar.gz" file or a ".whl" file.
+```bash
+python -m build --sdist
+python -m build --wheel
+```
+
+5. Use **twine** to upload your package to PyPI.
+```bash
+twine upload dist/*
+
+Uploading distributions to https://upload.pypi.org/legacy/
+```
+
+6. Use **pipdeptree** to display the direct and transitive dependencies in the virtual environment.
+```bash
+pipdeptree
+pipdeptree --exclude pip,setuptools,venv,pip-tools,wheel,pipdeptree,build,twine,readme-renderer --graph-output png > "dependencies.png" 
+```
+
+<p>
+  <img src="./pix/pipdeptree-dependencies.png" width="700" />
+</p>
+
+7. Check [Python Module Index](https://docs.python.org/3.9/py-modindex.html) for the default packages that comes with the installed python version.
+
 ## References
 * https://pypi.org/project/psycopg2/
 * https://gist.github.com/ibraheem4/ce5ccd3e4d7a65589ce84f2a3b7c23a3
+* https://setuptools.pypa.io/en/latest/userguide/quickstart.html
