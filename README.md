@@ -242,6 +242,17 @@ pipdeptree --exclude pip,setuptools,venv,pip-tools,wheel,pipdeptree,build,twine,
 7. Check [Python Module Index](https://docs.python.org/3.9/py-modindex.html) for the default packages that comes with the installed python version.
 
 ## References
+* https://blog.basis-ai.com/introducing-boxkite-open-source-model-observability-for-mlops-teams
+* https://grafana.com/blog/2021/08/02/how-basisai-uses-grafana-and-prometheus-to-monitor-model-drift-in-machine-learning-workloads/  
 * https://pypi.org/project/psycopg2/
 * https://gist.github.com/ibraheem4/ce5ccd3e4d7a65589ce84f2a3b7c23a3
 * https://setuptools.pypa.io/en/latest/userguide/quickstart.html
+* https://www.mlflow.org/docs/latest/rest-api.html
+* https://www.mlflow.org/docs/latest/python_api/mlflow.tracking.html
+
+## Commands
+
+```bash
+lsof -i -P | grep LISTEN
+kill -9 xxxxx
+```

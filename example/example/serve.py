@@ -1,19 +1,39 @@
 from flask import Flask, request, jsonify
 import mlflow
+from mlflow.store.artifact.runs_artifact_repo import RunsArtifactRepository
 import pandas as pd
 
 # Option 1 - MLFlow Gunicorn to serve the model
 # mlflow models serve -m ./mlruns/[experiment_id]/[run_id]/artifacts/model -h 0.0.0.0 -p 5001
 
 # export MLFLOW_TRACKING_URI=http://localhost:5000
-# mlflow models serve -m "models:/Boxkite/1" -h 0.0.0.0 -p 5001
+# mlflow models serve -m "models:/[model_name]/[model_version]" -h 0.0.0.0 -p 5001
 
 # Option 2 - Flask to serve the model
 from boxkite.monitoring.service import ModelMonitoringService
 from boxkite.monitoring.collector.baseline import BaselineMetricCollector
 
+# https://www.mlflow.org/docs/latest/python_api/mlflow.sklearn.html
+# Option 2.1 - DB
+tracking_uri = "postgresql://mlflow:mlflow@127.0.0.1:5432/mlflow"
+# Option 2.2 - REST API
+# tracking_uri = "http://localhost:5000"
+mlflow.set_tracking_uri(tracking_uri)
+
+# Basic setting
+histogram_path = "histogram"
+run_id = '40d1aab251bb4342ac89e7f8886f7af2'
+model_name = "regression"
+model_version = 7
+
+# Load the artifact registry - depends on mlflow.set_tracking_uri()
+runs_uri = f"runs:/{run_id}/{histogram_path}"
+histogram_dir = RunsArtifactRepository.get_underlying_uri(runs_uri)
+print('hist_dir: {}'.format(histogram_dir))
+hist_path = f'{histogram_dir}/histogram.txt'.replace('file://', '')
+
 monitor = ModelMonitoringService(
-    baseline_collector=BaselineMetricCollector(path="./histogram.txt")
+    baseline_collector=BaselineMetricCollector(path=hist_path)
 )
 
 app = Flask(__name__)
@@ -26,15 +46,7 @@ def predict():
     df = pd.DataFrame(columns=features["columns"], data=features["data"])
     print(df)
 
-    # https://www.mlflow.org/docs/latest/python_api/mlflow.sklearn.html
-    # Option 1 - DB
-    # tracking_uri = "postgresql://mlflow:mlflow@127.0.0.1:5432/mlflow"
-    # Option 2 - REST API
-    tracking_uri = "http://localhost:5000"
-    mlflow.set_tracking_uri(tracking_uri)
-
-    model_name = "Boxkite"
-    model_version = 1
+    # Load the model - depends on mlflow.set_tracking_uri()
     lr = mlflow.sklearn.load_model(model_uri=f"models:/{model_name}/{model_version}")
 
     score = lr.predict(df)[0]
