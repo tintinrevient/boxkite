@@ -81,6 +81,10 @@ Boxkite is a project from BasisAI, who offer an MLOps Platform called Bedrock.
 
 ## Boxkite dummy example
 
+<p>
+  <img src="./pix/boxkite.png" width="800" />
+</p>
+
 1. Create the virtual environment for this example, and install the required modules.
 ```bash
 cd example
@@ -182,7 +186,7 @@ scrape_configs:
   <img src="./pix/grafana-boxkite-dashboard.png" width="700" />
 </p>
 
-## Virtual Environment
+## Virtual environment
 
 1. Use **setuptools** to package the project whose structure is as follows:
   * **pyproject.toml** - declare you want to use setuptools to package your project.
