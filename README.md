@@ -147,7 +147,7 @@ curl -X POST -H "Content-Type:application/json; format=pandas-split" \
 
 9. The Boxkite metrics are exposed: http://localhost:5001/metrics
 
-10. Install the Prometheus using pre-compiled binaries - https://prometheus.io/docs/prometheus/latest/installation/
+10. Install the Prometheus using pre-compiled binaries https://prometheus.io/docs/prometheus/latest/installation/
 
 11. Start the Prometheus server with the updated config "prometheus.yml": http://localhost:9090
 ```bash
@@ -165,7 +165,7 @@ scrape_configs:
       - targets: [ "localhost:5001" ]
 ```
 
-12. Install the Grafana using macOS binaries - https://grafana.com/docs/grafana/latest/installation/mac/#installing-on-macos
+12. Install the Grafana using macOS binaries https://grafana.com/docs/grafana/latest/installation/mac/#installing-on-macos
 
 13. Start the Grafana server: http://localhost:3000
 ```bash
