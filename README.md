@@ -249,6 +249,8 @@ pipdeptree --exclude pip,setuptools,venv,pip-tools,wheel,pipdeptree,build,twine,
 * https://setuptools.pypa.io/en/latest/userguide/quickstart.html
 * https://www.mlflow.org/docs/latest/rest-api.html
 * https://www.mlflow.org/docs/latest/python_api/mlflow.tracking.html
+* https://www.mlflow.org/docs/latest/tracking.html
+* https://www.mlflow.org/docs/latest/model-registry.html
 
 ## Commands
 
