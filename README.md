@@ -188,7 +188,7 @@ scrape_configs:
   * **pyproject.toml** - declare you want to use setuptools to package your project.
   * **setup.py** - specify your package information, such as metadata, contents, dependencies.
 
-```bash
+```
 ├── <package_name>                
 |   ├── <package_name>
 |   |   ├── <library_name>
@@ -236,7 +236,7 @@ pipdeptree --exclude pip,setuptools,venv,pip-tools,wheel,pipdeptree,build,twine,
 ```
 
 <p>
-  <img src="./pix/pipdeptree-dependencies.png" width="700" />
+  <img src="./pix/pipdeptree-dependencies.png" width="800" />
 </p>
 
 7. Check [Python Module Index](https://docs.python.org/3.9/py-modindex.html) for the default packages that comes with the installed python version.
