@@ -78,3 +78,110 @@ A full list of contributors, which includes individuals that have contributed en
 Boxkite is a project from BasisAI, who offer an MLOps Platform called Bedrock.
 
 [Bedrock](https://basis-ai.com/product) helps data scientists own the end-to-end deployment of machine learning workflows. Boxkite was originally part of the Bedrock client library, but we've spun it out into an open source project so that it's useful for everyone!
+
+## Example
+
+1. Create the virtual environment for this example, and install the required modules.
+```bash
+cd example
+
+python -m venv venv
+
+pip install pip-tools
+pip-compile
+pip-sync
+```
+
+2. Install the postgresql for the MLflow server as "tracking_uri".
+```bash
+brew install postgresql
+
+brew services start postgresql
+createuser -s postgres
+```
+
+3. Initialize the postgresql for the MLflow server, and start the MLflow server.
+```bash
+cd example/mlflow
+
+sh mlflow_init.sh
+sh mlflow_start_server.sh
+```
+
+4. Check the weh UI of the MLflow server: http://localhost:5000
+
+5. Check the postgresql DB of the MLflow "tracking_uri".
+```bash
+psql -U mlflow
+
+mlflow=> \l
+mlflow=> \du
+
+mlflow=> \c mlflow
+You are now connected to database "mlflow" as user "mlflow".
+
+mlflow=> \dt
+mlflow=> select * from experiments;
+```
+
+6. Train an example model, and log the trained model with its histogram in the MLflow server.
+```bash
+cd example
+
+python example/train.py
+```
+
+7. Serve the trained model in the Flask server: http://localhost:5001
+```bash
+cd example
+
+python example/serve.py
+```
+
+8. Query the trained model by cURL.
+```bash
+curl -X POST -H "Content-Type:application/json; format=pandas-split" \
+  --data '{"columns":["alcohol", "chlorides", "citric acid", "density", "fixed acidity", "free sulfur dioxide", "pH", "residual sugar", "sulphates", "total sulfur dioxide", "volatile acidity"],"data":[[12.8, 0.029, 0.48, 0.98, 6.2, 29, 3.33, 1.2, 0.39, 75, 0.66]]}' \
+  http://0.0.0.0:5001/invocations
+```
+
+9. The Boxkite metrics are exposed: http://localhost:5001/metrics
+
+10. Install the Prometheus using pre-compiled binaries - https://prometheus.io/docs/prometheus/latest/installation/
+
+11. Start the Prometheus server with the updated config "prometheus.yml": http://localhost:9090
+```bash
+./prometheus
+```
+
+```bash
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "boxkite"
+    static_configs:
+      - targets: [ "localhost:5001" ]
+```
+
+12. Install the Grafana using macOS binaries - https://grafana.com/docs/grafana/latest/installation/mac/#installing-on-macos
+
+13. Start the Grafana server: http://localhost:3000
+```bash
+./bin/grafana-server web
+```
+
+14. Configure the Prometheus data source in the Grafana server.
+<p>
+  <img src="./pix/grafana-prometheus-data-source.png" width="500" />
+</p>
+
+15. Create the Boxkite dashboard using the defined JSON - https://github.com/boxkite-ml/boxkite/blob/master/examples/grafana-prometheus/metrics/dashboards/model.json
+<p>
+  <img src="./pix/grafana-boxkite-dashboard.png" width="700" />
+</p>
+
+## References
+* https://pypi.org/project/psycopg2/
+* https://gist.github.com/ibraheem4/ce5ccd3e4d7a65589ce84f2a3b7c23a3
