@@ -20,6 +20,9 @@ def eval_metrics(actual, pred):
     r2 = r2_score(actual, pred)
     return rmse, mae, r2
 
+def print_info(start_date):
+    logging.info(f'Start date is {start_date}')
+
 from boxkite.monitoring.service import ModelMonitoringService
 
 # Basic setting
@@ -34,8 +37,8 @@ if __name__ == "__main__":
     mlflow.set_tracking_uri(tracking_uri)
 
     # STEP 2 - experiment_id w/ artifact_location
-    experiment_name = "Boxkite Example Experiment"
-    default_artifact_root = "file:///Users/zhaoshu/Documents/workspace/boxkite/example/mlruns"
+    experiment_name = "Boxkite Experiment"
+    default_artifact_root = f"{os.environ['MLFLOW_HOME']}/mlruns"
     if not mlflow.get_experiment_by_name(experiment_name):
         mlflow.create_experiment(name=experiment_name, artifact_location=default_artifact_root)
     experiment = mlflow.get_experiment_by_name(experiment_name)
@@ -118,7 +121,10 @@ if __name__ == "__main__":
 
         # Step 4.1 - Register model name in the model registry
         client = MlflowClient()
-        if not client.get_registered_model(model_name):
+        try:
+            if not client.get_registered_model(model_name):
+                client.create_registered_model(model_name)
+        except:
             client.create_registered_model(model_name)
 
         # Step 4.2 - Create a new version of the model under the registered model name

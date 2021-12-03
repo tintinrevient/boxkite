@@ -87,7 +87,7 @@ Boxkite is a project from BasisAI, who offer an MLOps Platform called Bedrock.
 
 1. Create the virtual environment for this example, and install the required modules.
 ```bash
-cd example
+cd boxkite_example
 
 python -m venv venv
 
@@ -106,7 +106,7 @@ createuser -s postgres
 
 3. Initialize the postgresql for the MLflow server, and start the MLflow server.
 ```bash
-cd example/mlflow
+cd mlflow
 
 sh mlflow_init.sh
 sh mlflow_start_server.sh
@@ -130,16 +130,16 @@ mlflow=> select * from experiments;
 
 6. Train an example model, and log the trained model with its histogram in the MLflow server.
 ```bash
-cd example
+cd boxkite_example
 
-python example/train.py
+python boxkite_example/train.py
 ```
 
 7. Serve the trained model in the Flask server: http://localhost:5001
 ```bash
-cd example
+cd boxkite_example
 
-python example/serve.py
+python boxkite_example/serve.py
 ```
 
 8. Query the trained model by cURL.
@@ -193,13 +193,17 @@ scrape_configs:
   * **setup.py** - specify your package information, such as metadata, contents, dependencies.
 
 ```
-├── <package_name>                
+├── <dir_name>                
 |   ├── <package_name>
+|   |   ├── __init__.py
 |   |   ├── <library_name>
 |   |   |   ├── __init__.py
 |   |   └── <library_name>
 |   |   |   ├── __init__.py
+|   ├── <tests>
 |   |   ├── __init__.py
+|   |   ├── <package_name>
+|   |   |   ├── __init__.py
 |   ├── dist
 |   ├── venv
 |   ├── pyproject.toml
@@ -243,7 +247,28 @@ pipdeptree --exclude pip,setuptools,venv,pip-tools,wheel,pipdeptree,build,twine,
   <img src="./pix/pipdeptree-dependencies.png" width="800" />
 </p>
 
-7. Check [Python Module Index](https://docs.python.org/3.9/py-modindex.html) for the default packages that comes with the installed python version.
+7. Check [Python Module Index](https://docs.python.org/3.9/py-modindex.html) for the built-in packages that comes with the installed python version.
+
+8. Use **pytest** to perform the unit test for the package "boxkite_example".
+```bash
+cd boxkite_example
+
+pytest
+```
+
+9. Following the above steps, create and activate the virtual environment for the package "click_example".
+
+10. Install the "boxkite_example" package.
+```bash
+pip install -e ../boxkite_example
+```
+
+11. Check whether the method of "click_example" can import and use the method of "boxkite_example".
+```bash
+cd click_example
+
+python click_example/app.py --start_date="2000-01-01"
+```
 
 ## References
 * https://blog.basis-ai.com/introducing-boxkite-open-source-model-observability-for-mlops-teams

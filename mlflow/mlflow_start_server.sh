@@ -1,4 +1,4 @@
-export MLFLOW_HOME=/Users/zhaoshu/Documents/workspace/boxkite/example
+export MLFLOW_HOME=~/Documents/workspace/boxkite/boxkite_example
 
 echo "Default artifact root: ${MLFLOW_HOME}/mlruns"
 

@@ -22,9 +22,9 @@ mlflow.set_tracking_uri(tracking_uri)
 
 # Basic setting
 histogram_path = "histogram"
-run_id = '40d1aab251bb4342ac89e7f8886f7af2'
+run_id = '361671285f364ce3add344402d8d0f2f'
 model_name = "regression"
-model_version = 7
+model_version = 1
 
 # Load the artifact registry - depends on mlflow.set_tracking_uri()
 runs_uri = f"runs:/{run_id}/{histogram_path}"
