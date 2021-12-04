@@ -286,7 +286,108 @@ python click_example/app.py --start_date="2000-01-01"
 
 ## Commands
 
+To check the processes that are listening on ports:
 ```bash
 lsof -i -P | grep LISTEN
 kill -9 xxxxx
 ```
+
+To check the commit history:
+* git log will only show commit history below the branch you’ve checked out.
+```bash
+git log
+git log --patch -1
+git log --stat -1
+git log --since=2.weeks
+git log --oneline
+git log --graph
+git log -- path/to/file
+
+git log <branch>
+git log --all
+```
+
+To update the files in the snapshot (commit):
+```bash
+git commit --amend
+```
+
+To revert the unstaged file (whose changes will be discarded forever) to the last commit:
+```bash
+git restore <file>
+git checkout -- <file>
+```
+
+anything that is **committed** in Git can almost always be recovered, even:
+* on branches that were deleted
+* commits that were overwritten with an --amend commit
+
+To check the **lifecycle** of the **status** of your files:
+
+<p>
+  <img src="./pix/lifecycle.png" width="700" />
+</p>
+
+```bash
+git checkout -b [local_branch_name]
+
+git add <file>
+git rm --cached <file>
+git restore --staged <file>
+git reset HEAD <file>
+git rm <file>
+git mv <from_file> <to_file>
+
+git status
+git status --short
+git diff # changes between staged and unstaged
+git diff --staged
+git diff --cached
+
+git commit -m "some message"
+git push -u origin [local_branch_name]
+```
+
+To check the remote server, 'origin' is the default name Git gives to the server you cloned from:
+```bash
+git remote
+git remote -v
+git remote show <server>
+git remote add <server> <url>
+
+git remote rm <server>
+git remote rename <old_server> <new_server>
+
+git fetch <server>
+git pull # fetch and merge that remote branch into your current branch
+git config --global pull.rebase "false"
+
+git push <server> <branch>
+```
+
+To check the tags:
+```bash
+git tag
+git tag -l "0.0.3"
+
+git tag -a <version> <commit_id>
+git tag -a <version> -m "some message" # annotated tag
+git tag <version> #lightweight tag
+git tag -d <version>
+git show <version>
+
+git push <server> <tag>
+git push <server> --delete <tag>
+```
+
+Git keeps a special pointer called HEAD to track what branch you’re currently on: 
+```bash
+git log --oneline --decorate
+git log --oneline --decorate --graph --all
+
+git branch <branch>
+git checkout <branch>
+```
+
+origin/master HEAD rebase stash
+pull/fetch
