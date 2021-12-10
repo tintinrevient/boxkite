@@ -283,6 +283,8 @@ python click_example/app.py --start_date="2000-01-01"
 * https://docs.pytest.org/en/6.2.x/goodpractices.html
 * https://docs.pytest.org/en/6.2.x/example/index.html
 * https://tox.wiki/en/latest/example/pytest.html
+* https://w3techs.com/technologies/comparison/ws-gunicorn,ws-jetty,ws-nodejs
+* https://medium.com/@damianmyerscough/monitoring-gunicorn-with-prometheus-789954150069
 
 ## Git
 
@@ -439,7 +441,7 @@ git stash drop stash@{2}
 ```
 
 <p>
-  <img src="./pix/git-merge" width="700" />
+  <img src="./pix/git-merge.png" width="700" />
   <img src="./pix/git-rebase-1.png" width="700" />
   <img src="./pix/git-rebase-2.png" width="700" />
 </p>
