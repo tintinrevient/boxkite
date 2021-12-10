@@ -475,10 +475,80 @@ git rebase --continue
 * https://git-scm.com/book/en/v2/Git-Branching-Rebasing
 * https://git-scm.com/book/en/v2/Git-Internals-Maintenance-and-Data-Recovery
 
+## GitLab
+
+GitLab Runner is an application that works with GitLab CI/CD to run jobs in a **pipeline**.
+* When you register a **runner**, you must choose an **executor**, which determines the environment each **job** runs in.
+* When you install GitLab Runner in a Docker container and choose the Docker executor to run your jobs, it’s sometimes referred to as a “Docker-in-Docker” configuration.
+* You can configure the runner by editing the <code>$HOME/.gitlab-runner/config.toml</code> file. You can set logging, cache, concurrency, memory, CPU limits, and more.
+* You can use Prometheus to monitor your runners, for the currently-running jobs and how much CPU your runners are using.
+
+<p>
+  <img src="./pix/gitlab-runner.png" width="700" />
+</p>
+
+To install GitLab Runner on MacOS - [here](https://docs.gitlab.com/runner/install/osx.html)
+```bash
+brew install gitlab-runner
+brew services start gitlab-runner
+```
+
+To install GitLab on MacOS - [here](https://docs.gitlab.com/ee/install/docker.html)
+```bash
+docker run --detach \
+  --hostname gitlab.example.com \
+  --publish 443:443 --publish 80:80 --publish 22:22 \
+  --name gitlab \
+  --restart always \
+  --volume $GITLAB_HOME/config:/etc/gitlab \
+  --volume $GITLAB_HOME/logs:/var/log/gitlab \
+  --volume $GITLAB_HOME/data:/var/opt/gitlab \
+  gitlab/gitlab-ee:latest
+  
+docker logs -f gitlab
+
+docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
+docker exec -it gitlab /bin/bash
+
+docker restart gitlab
+docker stop gitlab
+docker rm gitlab
+```
+
+```bash
+cat /etc/hosts
+127.0.0.1       gitlab.example.com
+```
+
+## GitLab dummy example
+
+1. Create the dummy project in GitLab.
+   
+2. Register the runner with the specified URL, token and tag under the project link <code>Settings / CI/CD / Runners</code>.
+
+```bash
+gitlab-runner register
+```
+
+<p>
+  <img src="./pix/gitlab-runner-register.png" width="700" />
+</p>
+
+3. Check the pipeline under the project link <code>CI/CD / Pipelines</code>.
+
+<p>
+  <img src="./pix/gitlab-pipeline-1.png" width="700" />
+  <img src="./pix/gitlab-pipeline-2.png" width="500" />
+</p>
+
+## References
+* https://docs.gitlab.com/runner/
+
 ## Commands
 
 To check the processes that are listening on ports:
 ```bash
 lsof -i -P | grep LISTEN
+lsof -i:22
 kill -9 xxxxx
 ```
