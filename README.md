@@ -520,6 +520,11 @@ cat /etc/hosts
 127.0.0.1       gitlab.example.com
 ```
 
+Each job contains scripts and stages:
+* <code>stage</code> describes the sequential execution of jobs.
+* Use the <code>rules</code> keyword to specify when to run or skip jobs.
+* Keep information across jobs and stages persistent in a pipeline with <code>cache</code> and <code>artifacts</code>.
+
 ## GitLab dummy example
 
 1. Create the dummy project in GitLab.
