@@ -459,7 +459,7 @@ git checkout master
 git merge experiment
 
 git reflog
-git branch <branch> <commit-id>
+git branch new-branch-name <commit-id>
 
 git log HEAD~3..HEAD
 git log -3
