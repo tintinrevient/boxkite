@@ -270,6 +270,18 @@ cd click_example
 python click_example/app.py --start_date="2000-01-01"
 ```
 
+12. Use **tox** to test the python package in non-develop mode.
+```bash
+pip install tox
+tox
+```
+
+Assuming the following layout:
+```
+tox.ini
+setup.py
+```
+
 ## References
 * https://blog.basis-ai.com/introducing-boxkite-open-source-model-observability-for-mlops-teams
 * https://grafana.com/blog/2021/08/02/how-basisai-uses-grafana-and-prometheus-to-monitor-model-drift-in-machine-learning-workloads/  
@@ -283,6 +295,7 @@ python click_example/app.py --start_date="2000-01-01"
 * https://docs.pytest.org/en/6.2.x/goodpractices.html
 * https://docs.pytest.org/en/6.2.x/example/index.html
 * https://tox.wiki/en/latest/example/pytest.html
+* https://stackoverflow.com/questions/19048732/python-setup-py-develop-vs-install
 * https://w3techs.com/technologies/comparison/ws-gunicorn,ws-jetty,ws-nodejs
 * https://medium.com/@damianmyerscough/monitoring-gunicorn-with-prometheus-789954150069
 
