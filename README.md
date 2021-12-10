@@ -544,6 +544,24 @@ gitlab-runner register
 ## References
 * https://docs.gitlab.com/runner/
 
+## Hook dummy example
+
+1. Install the development packages including pre-commit.
+```bash
+pip-compile requirements-dev.txt --output-file=requirements-dev-compiled.txt
+
+pip install -r requirements-dev-compiled.txt
+```
+
+2. Add a pre-commit configuration <code>.pre-commit-config.yaml</code> in the root folder.
+
+3. Install the configuration at <code>.git/hooks/pre-commit</code>.
+```bash
+pre-commit install
+```
+
+4. Now <code>pre-commit</code> will run automatically on <code>git commit</code>.
+
 ## Commands
 
 To check the processes that are listening on ports:
