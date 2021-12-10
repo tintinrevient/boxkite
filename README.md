@@ -562,6 +562,9 @@ pre-commit install
 
 4. Now <code>pre-commit</code> will run automatically on <code>git commit</code>.
 
+## References
+* https://pre-commit.com/
+
 ## Commands
 
 To check the processes that are listening on ports:
