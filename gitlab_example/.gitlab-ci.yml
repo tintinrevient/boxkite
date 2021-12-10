@@ -1,0 +1,17 @@
+stages:
+  - build
+  - release
+
+build:
+  stage: build
+  script:
+    - bash build_script.sh
+  tags:
+    - test
+
+release:
+  stage: release
+  script:
+    - bash release_script.sh
+  tags:
+    - test
