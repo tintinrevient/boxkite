@@ -237,7 +237,7 @@ twine upload dist/*
 Uploading distributions to https://upload.pypi.org/legacy/
 ```
 
-6. Use **pipdeptree** to display the direct and transitive dependencies in the virtual environment.
+6. Use **pipdeptree** to display the direct and transitive dependencies in the virtual environment (<code>pip freeze</code> prints the currently installed packages as plain list).
 ```bash
 pipdeptree
 pipdeptree --exclude pip,setuptools,venv,pip-tools,wheel,pipdeptree,build,twine,readme-renderer --graph-output png > "dependencies.png" 
