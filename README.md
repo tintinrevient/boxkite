@@ -526,8 +526,8 @@ Each job contains scripts and stages:
 * Keep information across jobs and stages persistent in a pipeline with <code>cache</code> and <code>artifacts</code>.
 
 <p>
-  <img src="./pix/gitlab-pipeline-1.png" width="700" />
-  <img src="./pix/gitlab-pipeline-2.png" width="700" />
+  <img src="./pix/gitlab-workflow-1.png" width="700" />
+  <img src="./pix/gitlab-workflow-2.png" width="700" />
 </p>
 
 ## GitLab dummy example
@@ -547,8 +547,8 @@ gitlab-runner register
 3. Check the pipeline under the project link <code>CI/CD / Pipelines</code>.
 
 <p>
-  <img src="./pix/gitlab-workflow-1.png" width="700" />
-  <img src="./pix/gitlab-workflow-2.png" width="700" />
+  <img src="./pix/gitlab-pipeline-1.png" width="700" />
+  <img src="./pix/gitlab-pipeline-2.png" width="500" />
 </p>
 
 ## References
