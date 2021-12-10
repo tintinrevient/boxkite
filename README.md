@@ -284,13 +284,12 @@ python click_example/app.py --start_date="2000-01-01"
 * https://docs.pytest.org/en/6.2.x/example/index.html
 * https://tox.wiki/en/latest/example/pytest.html
 
-## Commands
+## Git
 
-To check the processes that are listening on ports:
-```bash
-lsof -i -P | grep LISTEN
-kill -9 xxxxx
-```
+To check the **lifecycle** of the **status** of your files:
+<p>
+  <img src="./pix/git-file-lifecycle.png" width="700" />
+</p>
 
 To check the commit history:
 * git log will only show commit history below the branch you’ve checked out.
@@ -301,51 +300,92 @@ git log --stat -1
 git log --since=2.weeks
 git log --oneline
 git log --graph
-git log -- path/to/file
+git log --oneline --graph --all
 
 git log <branch>
-git log --all
+git log -- path/to/file
+
+git reflog
+git log -g
 ```
 
-To update the files in the snapshot (commit):
-```bash
-git commit --amend
+Git keeps a special pointer called HEAD to track what branch you’re currently on: 
+* HEAD~ is almost linear in appearance and wants to go backward in a straight line;
+* HEAD^ is the first immediate parent of the tip of the current branch.
 ```
+G   H   I   J
+ \ /     \ /
+  D   E   F
+   \  |  / \
+    \ | /   |
+     \|/    |
+      B     C
+       \   /
+        \ /
+         A
 
-To revert the unstaged file (whose changes will be discarded forever) to the last commit:
-```bash
-git restore <file>
-git checkout -- <file>
+A =      = A^0
+B = A^   = A^1     = A~1
+C = A^2
+D = A^^  = A^1^1   = A~2
+E = B^2  = A^^2
+F = B^3  = A^^3
+G = A^^^ = A^1^1^1 = A~3
+H = D^2  = B^^2    = A^^^2  = A~2^2
+I = F^   = B^3^    = A^^3^
+J = F^2  = B^3^2   = A^^3^2
 ```
-
-anything that is **committed** in Git can almost always be recovered, even:
-* on branches that were deleted
-* commits that were overwritten with an --amend commit
-
-To check the **lifecycle** of the **status** of your files:
 
 <p>
-  <img src="./pix/lifecycle.png" width="700" />
+  <img src="./pix/git-branching-commit.png" width="700" />
+  <img src="./pix/git-branching-silo.png" width="700" />
 </p>
 
 ```bash
-git checkout -b [local_branch_name]
+git checkout -b <branch>
+git branch <branch>
+git checkout <branch>
 
+git mergh <branch>
+git branch -d <branch>
+
+git branch -v
+git branch --merged
+git branch --no-merged
+git branch --all # including the remote branches
+
+git branch -d delete-branch-name # already merged
+git branch -D delete-branch-name # not yet merged
+
+git branch --move bad-branch-name corrected-branch-name
+git push --set-upstream origin corrected-branch-name
+git push -u origin corrected-branch-name
+git push --delete origin bad-branch-name
+```
+
+<p>
+  <img src="./pix/git-reset-workflow.png" width="700" />
+  <img src="./pix/git-reset-soft.png" width="700" />
+  <img src="./pix/git-reset-mixed.png" width="700" />
+  <img src="./pix/git-reset-hard.png" width="700" />
+</p>
+
+```bash
 git add <file>
 git rm --cached <file>
 git restore --staged <file>
 git reset HEAD <file>
-git rm <file>
-git mv <from_file> <to_file>
+
+git reset --hard HEAD~
+git reset --mixed HEAD~
+git reset --soft HEAD~
+git reset --hard <commit-id>
 
 git status
 git status --short
 git diff # changes between staged and unstaged
 git diff --staged
 git diff --cached
-
-git commit -m "some message"
-git push -u origin [local_branch_name]
 ```
 
 To check the remote server, 'origin' is the default name Git gives to the server you cloned from:
@@ -372,7 +412,7 @@ git tag -l "0.0.3"
 
 git tag -a <version> <commit_id>
 git tag -a <version> -m "some message" # annotated tag
-git tag <version> #lightweight tag
+git tag <version> # lightweight tag
 git tag -d <version>
 git show <version>
 
@@ -380,14 +420,63 @@ git push <server> <tag>
 git push <server> --delete <tag>
 ```
 
-Git keeps a special pointer called HEAD to track what branch you’re currently on: 
+To stash a branch (staged + unstaged):
+* Having a clean working directory and applying it on the same branch aren’t necessary to successfully apply a stash.
+* The changes to your files were reapplied, but the file you staged before wasn’t restaged.
 ```bash
-git log --oneline --decorate
-git log --oneline --decorate --graph --all
+git stash # only the tracked files = staged + unstaged
+git stash -u # including the untracked files
+git stash -a # including the ignored files
 
-git branch <branch>
-git checkout <branch>
+git stash list
+
+git stash apply
+git stash apply stash@{2}
+git stash apply --index # reapply the staged changes, so you can get back to your original position in that branch
+git stash branch new-branch-name
+
+git stash drop stash@{2}
 ```
 
-origin/master HEAD rebase stash
-pull/fetch
+<p>
+  <img src="./pix/git-merge" width="700" />
+  <img src="./pix/git-rebase-1.png" width="700" />
+  <img src="./pix/git-rebase-2.png" width="700" />
+</p>
+
+Git rebase vs merge:
+* There is no difference in the end product of the integration;
+* rebasing makes for a cleaner commit history.
+```bash
+git checkout experiment
+git rebase master
+git checkout master
+git merge experiment
+
+git checkout master
+git merge experiment
+
+git reflog
+git branch <branch> <commit-id>
+
+git log HEAD~3..HEAD
+git log -3
+git rebase -i HEAD~3 # can type "edit, squash"
+
+git commit --amend # replace the last commit with your new, improved commit.
+git rebase --continue
+```
+
+## References
+* https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified
+* https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History
+* https://git-scm.com/book/en/v2/Git-Branching-Rebasing
+* https://git-scm.com/book/en/v2/Git-Internals-Maintenance-and-Data-Recovery
+
+## Commands
+
+To check the processes that are listening on ports:
+```bash
+lsof -i -P | grep LISTEN
+kill -9 xxxxx
+```
