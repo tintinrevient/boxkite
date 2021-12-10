@@ -553,6 +553,8 @@ gitlab-runner register
 
 ## References
 * https://docs.gitlab.com/runner/
+* https://docs.gitlab.com/ee/ci/pipelines/pipeline_architectures.html
+* https://docs.gitlab.com/ee/ci/pipelines/merge_request_pipelines.html
 
 ## Hook dummy example
 
