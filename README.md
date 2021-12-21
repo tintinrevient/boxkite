@@ -79,6 +79,9 @@ Boxkite is a project from BasisAI, who offer an MLOps Platform called Bedrock.
 
 [Bedrock](https://basis-ai.com/product) helps data scientists own the end-to-end deployment of machine learning workflows. Boxkite was originally part of the Bedrock client library, but we've spun it out into an open source project so that it's useful for everyone!
 
+## Boxkite HA example
+Go to [this notebook example](./examples/ha-boxkite-notebook) to explore more.
+
 ## Boxkite dummy example
 
 <p>
