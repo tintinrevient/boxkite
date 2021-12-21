@@ -1,0 +1,17 @@
+# HELP feature_0_value_baseline Baseline values for feature: age
+# TYPE feature_0_value_baseline histogram
+feature_0_value_baseline_bucket{le="23.0"} 1.0
+feature_0_value_baseline_bucket{le="33.333333333333336"} 2.0
+feature_0_value_baseline_bucket{le="43.66666666666667"} 2.0
+feature_0_value_baseline_bucket{le="54.0"} 3.0
+feature_0_value_baseline_bucket{le="+Inf"} 3.0
+feature_0_value_baseline_count 3.0
+feature_0_value_baseline_sum 110.0
+# HELP feature_1_value_baseline_total Baseline values for feature: sex
+# TYPE feature_1_value_baseline_total counter
+feature_1_value_baseline_total{bin="0.0"} 1.0
+feature_1_value_baseline_total{bin="1.0"} 2.0
+# HELP inference_value_baseline_total Baseline inference values for test set
+# TYPE inference_value_baseline_total counter
+inference_value_baseline_total{bin="cat1"} 2.0
+inference_value_baseline_total{bin="cat2"} 1.0
