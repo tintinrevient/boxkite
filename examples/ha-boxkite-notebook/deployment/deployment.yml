@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-deployment
+  labels:
+    app: ml-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ml-server
+  template:
+    metadata:
+      labels:
+        app: ml-server
+      annotations:
+        prometheus.io/scrape: "true"
+    spec:
+#      volumes:
+#        - name: task-pv-storage
+#          persistentVolumeClaim:
+#            claimName: task-pv-claim
+      containers:
+        - name: ml-server
+          image: tintinrevient/boxkite-app
+          ports:
+            - containerPort: 5000
+#          volumeMounts:
+#            - mountPath: "/app"
+#              name: task-pv-storage
