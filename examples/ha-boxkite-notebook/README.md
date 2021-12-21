@@ -5,6 +5,11 @@
 jupyter notebook
 ```
 
+If Jupyter is not installed:
+```bash
+pip install jupyterlab
+```
+
 ## References
 * https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 * https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/
