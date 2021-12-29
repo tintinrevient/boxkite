@@ -485,6 +485,20 @@ git commit --amend # replace the last commit with your new, improved commit.
 git rebase --continue
 ```
 
+Git reset vs merge:
+* `git reset` will discard all local changes;
+* `git merge` will attempt to preserve the local changes.
+
+```bash
+git fetch
+git reset --hard origin/<branch>
+
+git pull =>
+
+git fetch
+git merge origin/<branch>
+```
+
 ## References
 * https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified
 * https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History
