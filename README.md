@@ -504,6 +504,7 @@ git merge origin/<branch>
 * https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History
 * https://git-scm.com/book/en/v2/Git-Branching-Rebasing
 * https://git-scm.com/book/en/v2/Git-Internals-Maintenance-and-Data-Recovery
+* https://stackoverflow.com/questions/5667884/how-to-squash-commits-in-git-after-they-have-been-pushed
 
 ## GitLab
 
